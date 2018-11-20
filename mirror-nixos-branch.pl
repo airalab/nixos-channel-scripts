@@ -122,7 +122,7 @@ print "release url: $releaseUrl\n";
 my $releaseInfo = decode_json(fetch($releaseUrl, 'application/json'));
 
 my $releaseId = $releaseInfo->{id} or die;
-my $releaseName = $releaseInfo->{id} or die;
+my $releaseName = $releaseInfo->{id} . "-" . $channelName or die;
 my $evalId = $releaseInfo->{id} or die;
 my $evalUrl = "https://hydra.aira.life/eval/$evalId";
 my $evalInfo = decode_json(fetch($evalUrl, 'application/json'));
@@ -248,7 +248,7 @@ print $index_fh $html;
 close $index_fh;
 
 
-system("mv $tmpDir $dataDir") == 0 or die;
+system("mv $tmpDir $dataDir/$releaseName") == 0 or die;
 
 # Prevent concurrent writes to the channels directory.
 open(my $lockfile, ">>", "$channelsDir/.htaccess.lock");
