@@ -4,8 +4,11 @@
 
 ## Running
 
-    $ ./result/bin/mirror-nixos-branch nixos-16.03-small https://hydra.nixos.org/job/nixos/release-16.03-small/tested/latest-finished
+    [hydra@hydra:~/nixos-channel-scripts]$ ./result/bin/mirror-nixos-branch --releaseUrl https://hydra.aira.life/job/aira/core/tested/latest-finished
 
-    $ ./result/bin/mirror-nixos-branch nixos-unstable-small https://hydra.nixos.org/job/nixos/unstable-small/tested/latest-finished
+updates aira-unstable channel (https://hydra.aira.life/channels/aira-unstable/)
 
-    $ ./result/bin/generate-programs-index /data/releases/nixos-files.sqlite ./programs.sqlite http://nix-cache.s3.amazonaws.com/ /data/releases/nixos/unstable-small/nixos-16.09pre89017.9db1990-tmp/store-paths /data/releases/nixos/unstable-small/nixos-16.09pre89017.9db1990-tmp/unpack/nixos-16.09pre89017.9db1990/nixpkgs
+## Running
+    [hydra@hydra:~/nixos-channel-scripts]$ ./result/bin/mirror-nixos-branch --release
+    
+updates aira-release channel (https://hydra.aira.life/channels/aira-release/) with hydra evaluation result for airapkgs revision from (https://github.com/airalab/aira/)
