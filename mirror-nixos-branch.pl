@@ -28,7 +28,7 @@ GetOptions(
 
 
 if ($airaRelease) { 
-  $channelName = "aira-release";
+  $channelName = "aira-stable";
 } else {
   $channelName = "aira-unstable";
 }
@@ -39,9 +39,9 @@ my $channelDirRel = $channelName eq "nixpkgs-unstable" ? "nixpkgs" : "$1/$2";
 
 
 # Configuration.
-my $workDir = "/var/lib/hydra";
-my $channelsDir = "$workDir/data/releases/channels";
-my $dataDir = "$workDir/data/releases";
+#my $workDir = "/var/lib/hydra";
+my $dataDir = "/var/lib/data/releases";
+my $channelsDir = "$dataDir/channels";
 #my $filesCache = "/data/releases/nixos-files.sqlite";
 my $bucketName = "releases.aira.life";
 
@@ -145,7 +145,7 @@ my $d = `NIX_PATH= nix-instantiate --eval -E "builtins.compareVersions (builtins
 chomp $d;
 die "channel would go back in time from $curRelease to $releaseName, bailing out\n" if $d == 1;
 
-my $tmpDir = "$workDir/data/releases/tmp/release-$channelName/$releaseName";
+my $tmpDir = "$dataDir/tmp/release-$channelName/$releaseName";
 File::Path::make_path($tmpDir);
 
 write_file("$tmpDir/src-url", $evalUrl);
@@ -295,6 +295,7 @@ if ( -e "$dataDir/$releaseName" ) {
 }
 
 system("mv $tmpDir $dataDir/") == 0 or die;
+
 system("ipfs add -r -q --nocopy $dataDir/$releaseName | tail -n1 | ipfs name publish --key $channelName") == 0 or die;
 #system("ln -sfn $dataDir/$releaseName $dataDir/$channelDataDirectory ") == 0 or die;
 
